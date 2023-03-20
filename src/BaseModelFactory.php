@@ -14,7 +14,7 @@ abstract class BaseModelFactory extends Factory
     protected function withFaker(): Generator
     {
         $faker = parent::withFaker();
-        $faker->addProvider(new FakerProvider($this->faker));
+        $faker->addProvider(new FakerProvider($faker));
 
         return $faker;
     }
