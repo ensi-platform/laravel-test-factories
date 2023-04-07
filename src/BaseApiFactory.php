@@ -7,23 +7,6 @@ use Ensi\TestFactories\FactoryMissingValue;
 
 abstract class BaseApiFactory extends Factory
 {
-    public ?int $id = null;
-
-    public function withId(?int $id = null): static
-    {
-        return $this->immutableSet('id', $id ?? $this->faker->modelId());
-    }
-
-    protected function optionalId()
-    {
-        return $this->whenNotNull($this->id, $this->id);
-    }
-
-    protected function requiredId(): int
-    {
-        return $this->id ?? $this->faker->numberBetween(1, 99999);
-    }
-
     protected function notNull(mixed $value, mixed $default = null): mixed
     {
         $default = func_num_args() === 2 ? $default : new FactoryMissingValue();
