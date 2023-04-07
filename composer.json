@@ -28,6 +28,13 @@
             "Ensi\\LaravelTestFactories\\": "src"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ensi\\LaravelTestFactories\\LaravelTestServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "cs": "php-cs-fixer fix --config .php-cs-fixer.php"
     },
