@@ -19,15 +19,24 @@ abstract class BaseApiFactory extends Factory
      * @param class-string<T> $classResponse
      * @param array $extras
      * @param int $count
+     * @param mixed $pagination
+     * @param callable|null $beforeCallback
      * @return T
      */
-    protected function generateResponseSearch(string $classResponse, array $extras = [], int $count = 1, mixed $pagination = null)
-    {
+    protected function generateResponseSearch(
+        string $classResponse,
+        array $extras = [],
+        int $count = 1,
+        mixed $pagination = null,
+        ?callable $beforeCallback = null,
+    ) {
         $meta = $classResponse::openAPITypes()['meta'];
 
         $data = [];
         $count = $extras ? count($extras) : $count;
         for ($i = 0; $i < $count; $i++) {
+            $this->beforeMake($i, $beforeCallback);
+
             $data[] = $this->make($extras[$i] ?? []);
         }
 
@@ -37,5 +46,12 @@ abstract class BaseApiFactory extends Factory
                 'pagination' => $pagination ?: PaginationFactory::new()->makeResponseOffset($meta::openAPITypes()['pagination']),
             ]),
         ]);
+    }
+
+    protected function beforeMake(int $index, ?callable $callback = null): void
+    {
+        if ($callback) {
+            $callback($this, $index);
+        }
     }
 }
