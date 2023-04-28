@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "ensi/test-factories": ">=0.2",
+        "ensi/test-factories": ">=0.2 || @dev",
         "guzzlehttp/guzzle": ">=6.0",
         "laravel/framework": ">=8.0"
     },
