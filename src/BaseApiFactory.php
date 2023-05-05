@@ -37,7 +37,8 @@ abstract class BaseApiFactory extends Factory
         for ($i = 0; $i < $count; $i++) {
             $this->beforeMake($i, $beforeCallback);
 
-            $data[] = $this->make($extras[$i] ?? []);
+            $extra = $extras[$i] ?? [];
+            $data[] = is_object($extra) ? $extra : $this->make($extra);
         }
 
         return new $classResponse([
