@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @property Generator|FakerProvider $faker
+ *
+ * @template TModel of \Illuminate\Database\Eloquent\Model
+ * @extends Factory<TModel>
  */
 abstract class BaseModelFactory extends Factory
 {
