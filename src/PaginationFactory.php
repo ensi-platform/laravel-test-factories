@@ -48,7 +48,7 @@ class PaginationFactory extends BaseApiFactory
     public function makeResponseCursor(string $className, array $extra = [])
     {
         $arr = $this
-            ->only(['type', 'limit', 'total', 'cursor', 'next_cursor', 'previous_cursor'])
+            ->only(['type', 'limit', 'cursor', 'next_cursor', 'previous_cursor'])
             ->make(array_merge($extra, [
                 'type' => config('laravel-test-factories.pagination.cursor'),
             ]));
