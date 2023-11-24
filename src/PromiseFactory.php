@@ -11,4 +11,9 @@ class PromiseFactory
     {
         return Create::promiseFor($response);
     }
+
+    public static function makeRejection($reason): PromiseInterface
+    {
+        return Create::rejectionFor($reason);
+    }
 }
