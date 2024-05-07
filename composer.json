@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "ensi/test-factories": "dev-laravel-11",
+        "ensi/test-factories": "^0.3.3",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "laravel/framework": "^8.0 || ^9.0 || ^10.0 || ^11.0"
     },
