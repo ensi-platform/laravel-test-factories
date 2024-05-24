@@ -6,7 +6,7 @@
 
 This package provides factories for typical data structures
 
-## Установка
+## Installation
 
 You can install the package via composer:
 
