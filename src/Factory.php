@@ -155,6 +155,7 @@ abstract class Factory
             return $nested->map(fn ($factory) => $factory->make())->all();
         }
 
+        /** @phpstan-ignore-next-line  */
         throw new InvalidArgumentException("Argument must be a Factory|array<Factory>|Collection<Factory>|null");
     }
 }
