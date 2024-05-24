@@ -1,35 +1,61 @@
 # Laravel Test factories
 
-Данный пакет предоставляет фабрики для типичных структур данных
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ensi/laravel-test-factories.svg?style=flat-square)](https://packagist.org/packages/ensi/laravel-test-factories)
+[![Tests](https://github.com/ensi-platform/laravel-test-factories/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/ensi-platform/laravel-test-factories/actions/workflows/run-tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/ensi/laravel-test-factories.svg?style=flat-square)](https://packagist.org/packages/ensi/laravel-test-factories)
+
+This package provides factories for typical data structures
 
 ## Установка
 
-Вы можете установить пакет через composer:
+You can install the package via composer:
 
-`composer require ensi/laravel-test-factories --dev`
+```bash
+composer require ensi/laravel-test-factories --dev
+```
 
-## Использование
+## Version Compatibility
 
-### Родительские классы
+| Laravel Test factories | Laravel                              | PHP  |
+|------------------------|--------------------------------------|------|
+| ^0.0.1                 | ^8.0                                 | ^8.0 |
+| ^0.1.0                 | ^8.0                                 | ^8.0 |
+| ^0.2.0                 | ^8.0                                 | ^8.0 |
+| ^0.2.4                 | ^8.0 \|\| ^9.0 \|\| ^10.0            | ^8.0 |
+| ^0.2.7                 | ^8.0 \|\| ^9.0 \|\| ^10.0 \|\| ^11.0 | ^8.0 |
+| ^0.3.0                 | ^9.0 \|\| ^10.0 \|\| ^11.0           | ^8.1 |
+
+## Basic usage
+
+### Parent classes
 
 #### BaseApiFactory
 
-Данный класс является базовым для ваших фабрик различных ответов/запросов для Api. 
+This class is the base for your factories of various Api responses/requests.
 
-Помимо прочего предоставляет метод `generateResponseSearch`, который позволяет генерировать ответ в формате `:search` эндпоинта, описанного [тут](https://docs.ensi.tech/guidelines/api#стандартные-методы-search)
+It also provides the `generateResponseSearch` method, which allows you to generate a response in the `:search` format of the endpoint described [here](https://docs.ensi.tech/guidelines/api#стандартные-методы-search)
 
 #### BaseModelFactory
 
-Данный класс является базовым для ваших фабрик Eloquent моделей
+This class is the base class for your Eloquent model factories
 
-### Готовые фабрики
+### Factories
 
-- `PaginationFactory` - фабрика для генерации кусочков ответов и запросов пагинации
-- `PromiseFactory` - фабрика для генерации `GuzzleHttp\Promise\PromiseInterface` 
+- `PaginationFactory` - factory for generating response pieces and pagination requests
+- `PromiseFactory` - factory for generating `GuzzleHttp\Promise\PromiseInterface` 
 
 ## Contributing
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+
+### Testing
+
+1. composer install
+2. composer test
+
+## Security Vulnerabilities
+
+Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
 
 ## License
 
