@@ -2,7 +2,6 @@
 
 namespace Ensi\LaravelTestFactories;
 
-use Ensi\TestFactories\FakerProvider;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
