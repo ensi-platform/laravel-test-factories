@@ -31,7 +31,7 @@ Let's create a factory and extend abstract Factory.
 All you need is to define `definition` and `make` methods.
 
 ```php
-use Ensi\TestFactories\Factory;
+use Ensi\LaravelTestFactories\Factory;
 
 class CustomerFactory extends Factory
 {
