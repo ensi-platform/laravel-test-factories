@@ -32,6 +32,16 @@ class FakerProvider extends Base
     }
 
     /**
+     * @param null|bool $always
+     *
+     * @return static
+     */
+    public function missing(?bool $always = null)
+    {
+        return static::nullable($always, new FactoryMissingValue());
+    }
+
+    /**
      * Сгенерировать массив значений. Совместим с $optionalAlways
      *
      * @param callable $f колбэк, возвращающий значения для массива
