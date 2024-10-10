@@ -15,11 +15,11 @@ class FakerProvider extends Base
 
     /**
      * @param null|bool $always
-     * @param null $default
+     * @param mixed $default
      *
      * @return static
      */
-    public function nullable(?bool $always = null, $default = null)
+    public function nullable(?bool $always = null, mixed $default = null)
     {
         $weight = 0.5;
         if (!is_null($always)) {
@@ -29,6 +29,16 @@ class FakerProvider extends Base
         }
 
         return parent::optional($weight, $default);
+    }
+
+    /**
+     * @param null|bool $always
+     *
+     * @return static
+     */
+    public function missing(?bool $always = null)
+    {
+        return static::nullable($always, new FactoryMissingValue());
     }
 
     /**
