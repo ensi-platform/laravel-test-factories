@@ -5,7 +5,14 @@ use Ensi\LaravelTestFactories\Tests\Stubs\TestObjectWithSetPkTraitFactory;
 
 test('TestObjectWithSetPkTraitFactory create', function () {
     /** @var TestObjectModel $result */
-    $result = TestObjectWithSetPkTraitFactory::new()->make(['client_id' => 1]);
+    $result = TestObjectWithSetPkTraitFactory::new()->make(['amount' => 100]);
+
+    expect($result->amount)->toEqual(100);
+});
+
+test('TestObjectWithSetPkTraitFactory create with setPk', function () {
+    /** @var TestObjectModel $result */
+    $result = TestObjectWithSetPkTraitFactory::new()->setPk(1)->make();
 
     expect($result->client_id)->toEqual(1);
 });

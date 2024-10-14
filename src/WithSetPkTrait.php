@@ -30,10 +30,7 @@ trait WithSetPkTrait
             $variables = $this->getVariables($state, $keys);
 
             if ($this->hasValue) {
-                return $this->state(function () use ($variables) {
-                    return $this->generatePk(...$variables);
-                })
-                    ->state($state);
+                return $this->setPk(...$variables)->state($state);
             }
         }
 
