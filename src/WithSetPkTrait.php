@@ -55,7 +55,7 @@ trait WithSetPkTrait
 
     protected function getSequenceState(array $variables, Sequence $sequence): self
     {
-        return $this->state(function () use ($variables, $sequence) {
+        return parent::state(function () use ($variables, $sequence) {
             $values = $variables[$sequence->index % $sequence->count] ?? [null, null];
 
             $isNewSequence = true;
