@@ -3,6 +3,7 @@
 namespace Ensi\LaravelTestFactories;
 
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Collection;
 
 trait WithSetPkTrait
 {
@@ -12,7 +13,6 @@ trait WithSetPkTrait
     protected function stateSetPk(mixed $state, array $keys, bool $isSequence = false): static
     {
         if ($isSequence) {
-            $newSequence = new Sequence(...$state);
             $variables = [];
 
             foreach ($state as $sequenceState) {
@@ -20,10 +20,13 @@ trait WithSetPkTrait
             }
 
             if ($this->hasValue) {
-                return $this->getSequenceState($variables, $newSequence)->state($newSequence);
+                $newSequence = new SequenceWithSetPk(...$state);
+                $newSequence->pkVariables = $variables;
+
+                return $this->getSequenceState($newSequence)->state($newSequence);
             }
 
-            return parent::state($newSequence);
+            return parent::state(new Sequence(...$state));
         }
 
         if (is_array($state)) {
@@ -53,16 +56,22 @@ trait WithSetPkTrait
         return $variables;
     }
 
-    protected function getSequenceState(array $variables, Sequence $sequence): self
+    protected function getSequenceState(SequenceWithSetPk $sequence): self
     {
-        return parent::state(function () use ($variables, $sequence) {
-            $values = $variables[$sequence->index % $sequence->count] ?? [null, null];
+        return parent::state(function () use ($sequence) {
+            $values = $sequence->pkVariables[$sequence->index % $sequence->count] ?? [null, null];
 
+            $statesSequenceCount = $this->getPkSequenceStates()->count();
+            $isLastSequence = false;
+            $count = 0;
             $isNewSequence = true;
             foreach ($this->pkValues as $sequenceValues) {
+                $count++;
+
                 // Skip all sequences that are applied after current one
-                if ($sequenceValues == $variables) {
+                if ($sequenceValues == $sequence->pkVariables) {
                     $isNewSequence = false;
+                    $isLastSequence = $statesSequenceCount == $count;
 
                     break;
                 }
@@ -78,10 +87,26 @@ trait WithSetPkTrait
             }
 
             if ($isNewSequence) {
-                $this->pkValues[] = $variables;
+                $this->pkValues[] = $sequence->pkVariables;
+                $isLastSequence = $statesSequenceCount == $count;
+            }
+
+            // If this isn't the last sequence to be applied, we don't want to generate values
+            if (!$isLastSequence) {
+                return [];
             }
 
             return $this->generatePk(...$values);
         });
+    }
+
+    protected function getPkSequenceStates(): Collection
+    {
+        return $this->states->filter(fn ($state) => $state::class === SequenceWithSetPk::class && count($state->pkVariables) > 0);
+    }
+
+    public function skipGeneratePk(): bool
+    {
+        return $this->getPkSequenceStates()->isNotEmpty();
     }
 }

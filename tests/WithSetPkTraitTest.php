@@ -26,6 +26,7 @@ test('TestObjectWithSetPkTraitFactory create with sequence', function () {
         )
         ->make();
 
+    expect($result->count())->toEqual(10);
     expect($result->filter(fn (TestObjectModel $object) => $object->amount == 200)->count())->toEqual(5);
 });
 
@@ -38,6 +39,7 @@ test('TestObjectWithSetPkTraitFactory create with sequence affecting PK', functi
         )
         ->make();
 
+    expect($result->count())->toEqual(10);
     expect($result->filter(fn (TestObjectModel $object) => $object->client_id == 2)->count())->toEqual(5);
 });
 
@@ -55,6 +57,7 @@ test('TestObjectWithSetPkTraitFactory create with multiple sequences', function 
         )
         ->make();
 
+    expect($result->count())->toEqual(10);
     expect($result->filter(fn (TestObjectModel $object) => $object->client_id == 2)->count())->toEqual(5);
     expect($result->filter(fn (TestObjectModel $object) => $object->amount == 100)->count())->toEqual(4);
 });
@@ -75,6 +78,7 @@ test('TestObjectWithSetPkTraitFactory create with multiple sequences affecting P
         )
         ->make();
 
+    expect($result->count())->toEqual(10);
     expect($result->filter(fn (TestObjectModel $object) => $object->client_id == 2)->count())->toEqual(5);
     expect($result->filter(fn (TestObjectModel $object) => $object->location_id == 10)->count())->toEqual(2);
 });
@@ -95,6 +99,7 @@ test('TestObjectWithSetPkTraitFactory create with multiple sequences affecting P
         )
         ->make();
 
+    expect($result->count())->toEqual(10);
     expect($result->filter(fn (TestObjectModel $object) => $object->client_id == 2)->count())->toEqual(2);
     expect($result->filter(fn (TestObjectModel $object) => $object->location_id == 10)->count())->toEqual(5);
 });

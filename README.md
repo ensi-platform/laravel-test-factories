@@ -142,7 +142,9 @@ Following is the example of a factory ('client_id' and 'location_id' are fields 
 
     public function definition(): array
     {
-        return array_merge($this->generatePk(), [
+        $pk = $this->skipGeneratePk() ? [] : $this->generatePk();
+
+        return array_merge($pk, [
             'amount' => $this->faker->numberBetween(1, 1_000_000),
         ]);
     }
