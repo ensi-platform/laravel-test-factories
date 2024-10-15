@@ -88,7 +88,7 @@ trait WithSetPkTrait
 
             if ($isNewSequence) {
                 $this->pkValues[] = $sequence->pkVariables;
-                $isLastSequence = $statesSequenceCount == $count;
+                $isLastSequence = $statesSequenceCount - 1 == $count;
             }
 
             // If this isn't the last sequence to be applied, we don't want to generate values
