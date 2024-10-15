@@ -105,8 +105,8 @@ trait WithSetPkTrait
         return $this->states->filter(fn ($state) => $state::class === SequenceWithSetPk::class && count($state->pkVariables) > 0);
     }
 
-    public function skipGeneratePk(): bool
+    public function getPk(): array
     {
-        return $this->getPkSequenceStates()->isNotEmpty();
+        return $this->getPkSequenceStates()->isNotEmpty() ? [] : $this->generatePk();
     }
 }

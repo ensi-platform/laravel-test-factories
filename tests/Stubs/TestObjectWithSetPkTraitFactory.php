@@ -13,9 +13,7 @@ class TestObjectWithSetPkTraitFactory extends BaseModelFactory
 
     public function definition(): array
     {
-        $pk = $this->skipGeneratePk() ? [] : $this->generatePk();
-
-        return array_merge($pk, [
+        return array_merge($this->getPk(), [
             'amount' => $this->faker->numberBetween(1, 1_000_000),
         ]);
     }

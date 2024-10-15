@@ -130,7 +130,7 @@ $this->faker->modelId() // return unsigned bit integer value
 
 If your model has unique index consisting of multiple fields, WithSetPkTrait trait should be used to ensure generated values for these fields are unique.
 
-In order for trait to work, you have to define methods `state`, `setPk`, `sequence` and `generatePk` and include `generatePk` call in `definition`.
+In order for trait to work, you have to define methods `state`, `setPk`, `sequence` and `generatePk` and include `getPk` call in `definition`.
 Following is the example of a factory ('client_id' and 'location_id' are fields forming unique index):
 
 ```php
@@ -142,9 +142,7 @@ Following is the example of a factory ('client_id' and 'location_id' are fields 
 
     public function definition(): array
     {
-        $pk = $this->skipGeneratePk() ? [] : $this->generatePk();
-
-        return array_merge($pk, [
+        return array_merge($this->getPk(), [
             'amount' => $this->faker->numberBetween(1, 1_000_000),
         ]);
     }
