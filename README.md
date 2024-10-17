@@ -124,6 +124,59 @@ $this->faker->dateMore()
 $this->faker->modelId() // return unsigned bit integer value
 ```
 
+## Additional traits
+
+### WithSetPkTrait
+
+If your model has unique index consisting of multiple fields, WithSetPkTrait trait should be used to ensure generated values for these fields are unique.
+
+In order for trait to work, you have to define methods `getPkFields`, `setPk` and `generatePk` and include `getPk` call in `definition`.
+Following is the example of a factory ('client_id' and 'location_id' are fields forming unique index):
+
+```php
+    class ClientAmountFactory extends BaseModelFactory
+{
+    use WithSetPkTrait;
+
+    protected $model = ClientAmount::class;
+
+    public function definition(): array
+    {
+        return array_merge($this->getPk(), [
+            'amount' => $this->faker->numberBetween(1, 1_000_000),
+        ]);
+    }
+
+    public function getPkFields(): array
+    {
+        return ['client_id', 'location_id'];
+    }
+
+    public function setPk(?int $clientId = null, ?string $locationId = null): self // Use in tests to define values
+    {
+        return $this->state(function () use ($clientId, $locationId) {
+            return $this->generatePk($clientId, $locationId);
+        });
+    }
+
+    protected function generatePk(?int $clientId = null, ?string $locationId = null): array
+    {
+        $clientIdFormat = $clientId ?: '\d{10}';
+        $locationIdFormat = $locationId ?: '[0-9]{1,10}';
+
+        $unique = $this->faker->unique()->regexify("/^{$clientIdFormat}_{$locationIdFormat}");
+
+        $uniqueArr = explode('_', $unique);
+
+        return [
+            'client_id' => (int)$uniqueArr[0],
+            'location_id' => $uniqueArr[1],
+        ];
+    }
+}
+```
+
+*Important note* - fields must be declared in the same order in `getPkFields` and `setPk` methods.
 
 ## Parent classes
 
