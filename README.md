@@ -130,7 +130,7 @@ $this->faker->modelId() // return unsigned bit integer value
 
 If your model has unique index consisting of multiple fields, WithSetPkTrait trait should be used to ensure generated values for these fields are unique.
 
-In order for trait to work, you have to define methods `state`, `setPk`, `sequence` and `generatePk` and include `getPk` call in `definition`.
+In order for trait to work, you have to define methods `getPkFields`, `setPk` and `generatePk` and include `getPk` call in `definition`.
 Following is the example of a factory ('client_id' and 'location_id' are fields forming unique index):
 
 ```php
@@ -147,21 +147,16 @@ Following is the example of a factory ('client_id' and 'location_id' are fields 
         ]);
     }
 
+    public function getPkFields(): array
+    {
+        return ['client_id', 'location_id'];
+    }
+
     public function setPk(?int $clientId = null, ?string $locationId = null): self // Use in tests to define values
     {
         return $this->state(function () use ($clientId, $locationId) {
             return $this->generatePk($clientId, $locationId);
         });
-    }
-
-    public function state(mixed $state): static // Override of Laravel Eloquent Factory method
-    {
-        return $this->stateSetPk($state, ['client_id', 'location_id']);
-    }
-
-    public function sequence(...$sequence): static // Override of Laravel Eloquent Factory method
-    {
-        return $this->stateSetPk($sequence, ['client_id', 'location_id'], true);
     }
 
     protected function generatePk(?int $clientId = null, ?string $locationId = null): array
@@ -181,7 +176,7 @@ Following is the example of a factory ('client_id' and 'location_id' are fields 
 }
 ```
 
-*Important note* - fields must be declared in the same order in all methods.
+*Important note* - fields must be declared in the same order in `getPkFields` and `setPk` methods.
 
 ## Parent classes
 

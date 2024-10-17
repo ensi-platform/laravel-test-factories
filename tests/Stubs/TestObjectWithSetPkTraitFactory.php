@@ -18,21 +18,16 @@ class TestObjectWithSetPkTraitFactory extends BaseModelFactory
         ]);
     }
 
+    public function getPkFields(): array
+    {
+        return ['client_id', 'location_id'];
+    }
+
     public function setPk(?int $clientId = null, ?string $locationId = null): self
     {
         return $this->state(function () use ($clientId, $locationId) {
             return $this->generatePk($clientId, $locationId);
         });
-    }
-
-    public function state(mixed $state): static
-    {
-        return $this->stateSetPk($state, ['client_id', 'location_id']);
-    }
-
-    public function sequence(...$sequence): static
-    {
-        return $this->stateSetPk($sequence, ['client_id', 'location_id'], true);
     }
 
     protected function generatePk(?int $clientId = null, ?string $locationId = null): array

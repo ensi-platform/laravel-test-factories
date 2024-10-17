@@ -10,6 +10,28 @@ trait WithSetPkTrait
     protected bool $hasValue = false;
     protected array $pkValues = [];
 
+    /**
+     * Returns array of fields that form unique index
+     * @return string[]
+     */
+    abstract public function getPkFields(): array;
+
+    /** Adds a state transformation to a model using unique generated values */
+    abstract public function setPk(): self;
+
+    /** Generates unique values and returns them in format compatible with definition() */
+    abstract protected function generatePk(): array;
+
+    public function state(mixed $state): static
+    {
+        return $this->stateSetPk($state, $this->getPkFields());
+    }
+
+    public function sequence(...$sequence): static
+    {
+        return $this->stateSetPk($sequence, $this->getPkFields(), true);
+    }
+
     protected function stateSetPk(mixed $state, array $keys, bool $isSequence = false): static
     {
         if ($isSequence) {
