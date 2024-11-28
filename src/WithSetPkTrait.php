@@ -131,4 +131,9 @@ trait WithSetPkTrait
     {
         return $this->getPkSequenceStates()->isNotEmpty() ? [] : $this->generatePk();
     }
+
+    protected function valOrReg(mixed $value, string $regexp): mixed
+    {
+        return !is_null($value) ? $value : $regexp;
+    }
 }
