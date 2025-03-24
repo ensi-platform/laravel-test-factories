@@ -96,16 +96,16 @@ class FakerProvider extends Base
     /**
      * Generate a date that will be longer than the specified one
      *
-     * @param null|DateTime $dateFrom Minimum date. If omitted, any date will be generated.
+     * @param DateTime|string|null $dateFrom Minimum date. If omitted, any date will be generated.
      * @param null|string $format The date format for the response. If the format is not specified, the object will be returned.
-     * @param null|DateTime $dateEnd The maximum date. It only works if $dateFrom is passed.
+     * @param DateTime|string|null $dateEnd The maximum date. It only works if $dateFrom is passed.
      *
      * @return DateTime|string
      */
-    public function dateMore(?DateTime $dateFrom = null, ?string $format = null, ?DateTime $dateEnd = null): DateTime|string
+    public function dateMore(DateTime|string|null $dateFrom = null, ?string $format = null, DateTime|string|null $dateEnd = 'now'): DateTime|string
     {
         if ($dateFrom) {
-            $date = $this->generator->dateTimeBetween($dateFrom);
+            $date = $this->generator->dateTimeBetween($dateFrom, $dateEnd);
         } else {
             $date = $this->generator->dateTime();
         }
