@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Date;
 
 class FakerProvider extends Base
 {
-    // null - без изменений, false - всегда будет дефолтное значение, true - всегда будет сгенерированное значение
+    // null - unchanged
+    // false - there will always be a default value
+    // true - there will always be a generated value
     public static ?bool $optionalAlways = null;
     public static array $optionalDataset = [null, true, false];
 
@@ -42,11 +44,11 @@ class FakerProvider extends Base
     }
 
     /**
-     * Сгенерировать массив значений. Совместим с $optionalAlways
+     * Generate an array of values. Compatible with $optional Always
      *
-     * @param callable $f колбэк, возвращающий значения для массива
-     * @param int $min минимальное кол-во в массиве
-     * @param int $max максимальное кол-во в массиве
+     * @param callable $f a callback that returns values for an array
+     * @param int $min minimum number in the array
+     * @param int $max maximum number in the array
      *
      * @return array
      */
@@ -69,7 +71,7 @@ class FakerProvider extends Base
     }
 
     /**
-     * Вернуть фейкером конкретное значение
+     * Return a specific value as a fake
      *
      * @param $value
      *
@@ -81,7 +83,7 @@ class FakerProvider extends Base
     }
 
     /**
-     * Сгенерировать дату
+     * Generate a CarbonInterface date
      * @param DateTime|int|string $max
      * @param string|null $timezone
      * @return CarbonInterface
@@ -92,14 +94,15 @@ class FakerProvider extends Base
     }
 
     /**
-     * Сгенерировать дату, которая будет больше чем заданная
+     * Generate a date that will be longer than the specified one
      *
-     * @param null|DateTime $dateFrom Минимальная дата. Если не задана, сгенерируется любая дата
-     * @param null|string $format Формат даты для ответа. Если формат не задан, вернётся объект
+     * @param null|DateTime $dateFrom Minimum date. If omitted, any date will be generated.
+     * @param null|string $format The date format for the response. If the format is not specified, the object will be returned.
+     * @param null|DateTime $dateEnd The maximum date. It only works if $dateFrom is passed.
      *
      * @return DateTime|string
      */
-    public function dateMore(?DateTime $dateFrom = null, ?string $format = null): DateTime|string
+    public function dateMore(?DateTime $dateFrom = null, ?string $format = null, ?DateTime $dateEnd = null): DateTime|string
     {
         if ($dateFrom) {
             $date = $this->generator->dateTimeBetween($dateFrom);
@@ -115,7 +118,7 @@ class FakerProvider extends Base
     }
 
     /**
-     * Сгенерировать ID сущности
+     * Generate an Entity ID
      */
     public function modelId(): int
     {
@@ -123,7 +126,7 @@ class FakerProvider extends Base
     }
 
     /**
-     * Получить value случайного значения
+     * Get the value of a random value
      */
     public function randomEnum(array $cases): mixed
     {
