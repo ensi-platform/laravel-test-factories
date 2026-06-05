@@ -4,6 +4,7 @@ namespace Ensi\LaravelTestFactories;
 
 use Carbon\CarbonInterface;
 use DateTime;
+use Faker\ChanceGenerator;
 use Faker\Provider\Base;
 use Illuminate\Support\Facades\Date;
 
@@ -19,28 +20,28 @@ class FakerProvider extends Base
      * @param null|bool $always
      * @param mixed $default
      *
-     * @return static
+     * @return ChanceGenerator
      */
-    public function nullable(?bool $always = null, mixed $default = null)
+    public function nullable(?bool $always = null, mixed $default = null): ChanceGenerator
     {
         $weight = 0.5;
         if (!is_null($always)) {
-            $weight = $always ? 100 : 0;
+            $weight = $always ? 1.0 : 0.0;
         } elseif (!is_null(static::$optionalAlways)) {
-            $weight = static::$optionalAlways ? 100 : 0;
+            $weight = static::$optionalAlways ? 1.0 : 0.0;
         }
 
-        return parent::optional($weight, $default);
+        return new ChanceGenerator($this->generator, $weight, $default);
     }
 
     /**
      * @param null|bool $always
      *
-     * @return static
+     * @return ChanceGenerator
      */
-    public function missing(?bool $always = null)
+    public function missing(?bool $always = null): ChanceGenerator
     {
-        return static::nullable($always, new FactoryMissingValue());
+        return $this->nullable($always, new FactoryMissingValue());
     }
 
     /**
