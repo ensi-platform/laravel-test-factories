@@ -4,7 +4,6 @@ namespace Ensi\LaravelTestFactories;
 
 use Carbon\CarbonInterface;
 use DateTime;
-use Faker\ChanceGenerator;
 use Faker\Provider\Base;
 use Illuminate\Support\Facades\Date;
 
