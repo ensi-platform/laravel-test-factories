@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 /**
- * @property Generator|FakerProvider $faker
+ * @property Generator&FakerProvider $faker
  */
 abstract class Factory
 {
