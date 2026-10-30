@@ -16,6 +16,12 @@ parameters:
     level: 5
 
     ignoreErrors:
+        # Generator&FakerProvider is intentional for IDE autocompletion of custom faker methods
+        - '#PHPDoc tag @property for property .*::\$faker contains unresolvable type#'
+
+        # Traits are used by applications, not by the package itself
+        - identifier: trait.unused
+
         - '#PHPDoc tag @var#'
 
         - '#Unsafe usage of new static\(\)\.#'
